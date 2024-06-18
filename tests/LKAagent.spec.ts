@@ -19,6 +19,7 @@ test('LKA auth', async ({page, request}) => {
    await page.getByRole('button', { name: 'Подтвердить' }).click();
    await expect(page).toHaveURL(process.env.BaseURL + '/cabinet/agents');        //проверяем что был совершен переход по урлу на новую страницу
    await expect(page.locator('.header__user-info-avatar')).toBeVisible();
+
 });
 
 // добавление нового агента 
@@ -49,18 +50,20 @@ test('New agent', async ({ page, request}) => {
    await page.getByText('Выдать права управляющего агента').click();
    await page.getByText('Получено согласие на обработку персональных данных от агента').click();
    await page.getByRole('button', { name: 'Добавить' }).click();
-   await page.waitForTimeout(1000); 
-   //await expect(page.locator('div').filter({ hasText: `Приглашение отправлено На номер ${utils.phoneFormatted(newagent as string)}` })).first().toBeVisible();
+   await expect(page.getByText(`Приглашение отправлено На номер ${utils.phoneFormatted(newagent as string)}`)).toBeVisible();
    await expect(page.locator('.agent-details__agent-name')).toBeVisible();
-   
- });
+
+   });
 
  //авторизация нового агента 
 
  test('NewAgent auth', async ({page, request}) => {
+// создать агента по АПИ
+
    await page.goto(process.env.BaseURL + '/account/login');
    await expect(page).toHaveTitle(/Личный Кабинет агента/);
    const authResult = await utils.rocketAuth(request);
+   let newagent ='9601514398';
    await page.locator('.phone-control__input').fill(newagent);
    await page.getByText('Войти').click();
    await page.waitForTimeout(3000);                                   // тут задается ожидание,т.к. смс не успевает приходить
@@ -70,8 +73,9 @@ test('New agent', async ({ page, request}) => {
    await page.getByRole('button', { name: 'Подтвердить' }).click();
    await page.waitForTimeout(3000);
 // тут идет согласие с инстуркциями и политиками
-   await expect(page.locator('.instructions')).toBeVisible();
-   await expect(page.getByText('Ознакомьтесь с инструкциями по работе в личном кабинете агента.'));
+   //await expect(page.locator('.ab-page-content')).toBeVisible();
+   await expect(page.locator('.instructions__title')).toBeVisible();
+   //await expect(page.getByText('Ознакомьтесь с инструкциями по работе в личном кабинете агента.'));
    await page.getByText('Я ознакомился со всеми инструкциями').click();
    await page.getByText('Я даю согласие на обработку персональных данных').click();
    await page.getByRole('button', { name: 'Присоединиться' }).click();

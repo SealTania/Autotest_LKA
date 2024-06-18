@@ -30,11 +30,13 @@ test('Fixation 1 client', async ({page}) => {
   await page.getByPlaceholder('Иванович').fill('Олегович');
   await page.getByPlaceholder('(999) 999-99-99').fill(`9${(Math.floor((Math.random() * 10000000000)))}`);
   await page.getByPlaceholder('Введите эл. почту').fill(process.env.Email);
-  await page.getByPlaceholder('Введите или выберите значение').click();
+  /*await page.getByPlaceholder('Введите или выберите значение').click();
   await page.getByPlaceholder('Введите или выберите значение').fill(process.env.projectName);
   await page.getByPlaceholder('Введите или выберите значение').click();
   await page.keyboard.press('Enter');
-  await page.locator('.drop-down-list__item.is-only-title').getByText(process.env.projectName).click();
+  await page.locator('.drop-down-list__item.is-only-title').getByText(process.env.projectName).click();*/
+  await page.locator('ab-select-simple-autocomplete-value-accessor').getByRole('button').click();
+  await page.locator('div').filter({ hasText: process.env.projectName }).click();
   await page.getByPlaceholder('Напишите доп. информацию по клиенту, которую  вы хотите сообщить менеджеру Застр').fill('тут комент- Автотест');
   await page.getByText('Подтверждаю, что Клиент ознакомлен с условиями обработки персональных данных').click();
   await page.getByRole('button', { name: 'Зафиксировать' }).click();
@@ -85,6 +87,8 @@ test('ProlongFix', async ({ page }) => {
   await expect(page.locator('.client__info__item_value')).toBeVisible();
   await expect(page.getByText('Зафиксирован до')).toBeVisible();
   await page.getByText('Продлить фиксацию').click();
+  await page.waitForTimeout(2000);  
+  // цикл for  на прмиерно 10 итераций
   await expect(page.getByText('Зафиксирован до')).toBeVisible();
 
 });
@@ -103,6 +107,9 @@ test('restorFix', async ({ page }) => {
   await page.locator('div:nth-child(2) > .table__tr > div').first().click();
   await expect(page.getByText('Фиксация просрочена')).toBeVisible();
   await page.getByText('Восстановить фиксацию', { exact: true }).click();
+// добавить цикл фор на 10 итераций
+
+
   await expect(page.getByText('Зафиксирован до')).toBeVisible();
 });
 

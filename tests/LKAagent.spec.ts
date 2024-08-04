@@ -43,7 +43,7 @@ test('New agent', async ({ page, request}) => {
    await page.getByPlaceholder('Иванов', { exact: true }).fill('Авто');
    await page.getByPlaceholder('Иван', { exact: true }).fill('Петр');
    await page.getByPlaceholder('Иванович', { exact: true }).fill('Петрович');
-   //const newagent = `9${(Math.floor((Math.random() * 10000000000)))}`;
+   const newagent = `9${(Math.floor((Math.random() * 10000000000)))}`;
    await page.getByPlaceholder('(999) 999-99-99').fill(newagent);
    await page.getByPlaceholder('Введите эл. почту').fill('treznikova@profitbase.ru');
    await page.getByText('Выдать права управляющего агента').click();

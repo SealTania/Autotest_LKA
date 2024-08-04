@@ -45,7 +45,9 @@ export const getCodeFromRocket = async (phone:string, request, authResult) => {
     const json = await response.json();
     const message = json.messages[0].msg;
     console.log(message);
+    console.log(message.substring(107,114));
     return message.substring(107,114);   // для стейджа 100, 108; а для прода 107, 114
+    
 };
 
 

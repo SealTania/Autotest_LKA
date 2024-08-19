@@ -4,31 +4,33 @@
  * @param phone исходный номер телефона
  * @returns отформатированный номер телефона
  */
+
+// МОЛОДЕЦ!
 export const phoneFormatted = (phone:string) : string => {
     const phoneFormatted = phone.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/, "+7 ($1) $2-$3-$4");
     console.log(`Преобразованный номер по маске ${phoneFormatted}`);
     return phoneFormatted;
 }
 
-// запрос авторизации в рокете
+// запрос авторизации в рокете - лучше тоже тогда jsdoc
 export const rocketAuth = async (request) => {
-    const response = await request.post('https://chat.artsofte.ru/api/v1/method.callAnon/login', 
+    const response = await request.post('https://chat.artsofte.ru/api/v1/method.callAnon/login', // - хардкод, лучше в конфигу
         {
             data:{
-                "message": "{\"msg\":\"method\",\"id\":\"5\",\"method\":\"login\",\"params\":[{\"ldap\":true,\"username\":\"treznikova\",\"ldapPass\":\"5Qmo32Uk\",\"ldapOptions\":{}}]}"
+                "message": "{\"msg\":\"method\",\"id\":\"5\",\"method\":\"login\",\"params\":[{\"ldap\":true,\"username\":\"treznikova\",\"ldapPass\":\"5Qmo32Uk\",\"ldapOptions\":{}}]}" // - хардкод, лучше в конфигу
             }
         }
     );
     const json = await response.json();
-    const message = JSON.parse(json.message);
-    const result = message.result;
+    const message = JSON.parse(json.message); 
+    const result = message.result; // тут можно сильно не дробить, но в целом без разницы, можно оставить: JSON.parse((await response.json()).message).result
     console.log(`Token ${result.token}`);
     console.log(`User id ${result.id}`);
     return result;
 };
 
 // запрос вытаскивания кода авторизации
-export const getCodeFromRocket = async (phone:string, request, authResult) => {
+export const getCodeFromRocket = async (phone:string, request, authResult) => { // надо подобные функции засунуть в фикстуру, чтобы не прокидывать request из файла самого теста + authResult чтобы тоже не прокидывать. Если будет трудно исправить - напиши мне, помогу
     const response = await request.get(
         'https://chat.artsofte.ru/api/v1/chat.search',
         {
@@ -45,8 +47,8 @@ export const getCodeFromRocket = async (phone:string, request, authResult) => {
     const json = await response.json();
     const message = json.messages[0].msg;
     console.log(message);
-    console.log(message.substring(107,114));
-    return message.substring(107,114);   // для стейджа 100, 108; а для прода 107, 114
+    console.log(message.substring(107,114)); // явно есть лишние выводы
+    return message.substring(107,114);   // для стейджа 100, 108; а для прода 107, 114 - надо как-то тут определять какое окружение используется и делать расчёт относительно его
     
 };
 

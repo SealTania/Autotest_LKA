@@ -2,6 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
+// убрать комменты
+
 // Alternatively, read from "../my.env" file.
 dotenv.config({ path: path.resolve(__dirname, 'lka_variables.env') });
 

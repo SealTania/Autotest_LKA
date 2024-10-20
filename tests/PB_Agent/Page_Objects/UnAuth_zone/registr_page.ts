@@ -26,10 +26,10 @@ class RegistrationPage {
         this.marketingInput = page.locator('input[class*=select-simple-autocomplete]');
         this.marketingButton = page.locator('button[class*=select-simple-autocomplete]');
         this.newNameMarketButton = page.locator('div[class="drop-down-list__item-title drop-down-list__item-new"]');
-        this.sendButton = page.locator('button[type="button"]');
-        this.regModal = page.locator('div[class="modal-layout__container-inner"]');
-        this.codeInput = page.locator('input[class*=text-control__input-entry]');
-        this.submitButton = page.locator('button[class*=ui-btn_type_primary]');
+        this.sendButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]'); 
+        this.regModal = page.locator('div[class="modal-layout__container-inner"]'); 
+        this.codeInput = page.locator('div.modal-layout__container-inner input');
+        this.submitButton = page.locator('div.modal-layout__container-inner button[class*=ui-btn_type_primary]');
        
     }
     public async goback(page): Promise<void> {
@@ -40,15 +40,35 @@ class RegistrationPage {
     public async newMarketingName(page): Promise<void> {
         console.log('Filling new marketing name');
         await this.marketingInput.click();
+        await this.marketingInput.fill('Test агентство 5');
+        await page.waitForTimeout(2000);  
         await this.newNameMarketButton.click();
     }
 
     public async clickSendButton(page): Promise<void> {
         console.log('Go to modal');
         await this.sendButton.click();
+    
     }
 
-    
+
+    public async fillCode(phoneNomber: string, request): Promise<void> {
+        console.log('Filling code sms');
+        const authResult = await utils.rocketAuth(request);
+        const codeSMS = await utils.getCodeFromRocketReg(phoneNomber, request, authResult);
+        await this.codeInput.fill(codeSMS);
+        await this.submitButton.click();
+    }
+
+    public async checkRegCode(phoneNomber: string, page, request): Promise<void> {
+        await page.waitForTimeout(5000); 
+        await expect(this.regModal).toBeVisible();
+        await this.fillCode(phoneNomber, request);
+        await page.waitForTimeout(8000);   
+        await expect(page).toHaveURL(`${this.pageUrl}/agreement`);
+        console.log('Successful');
+
+    }   
 
 
 

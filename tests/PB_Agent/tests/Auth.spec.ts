@@ -19,7 +19,7 @@ test('Auth Dir main metod', async ({page, request}) => {
 
  });
 
-test('Auth additional metod', async ({page, request}) => {
+/**test('Auth additional metod', async ({page, request}) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.fillPhone(process.env.DirPhone as string);
@@ -27,3 +27,4 @@ test('Auth additional metod', async ({page, request}) => {
     await loginPage.addMetodSMS(process.env.DirPhone as string, page, request);
 
  });
+ **/

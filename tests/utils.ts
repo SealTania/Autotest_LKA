@@ -50,9 +50,28 @@ export const getCodeFromRocket = async (phone:string, request, authResult) => {
     
 };
 
-
-/*получить токен авторизации по текущему агенту (телефон + код смс)
-const bearerTokenLK
+// запрос вытаскивания кода регистрации
+export const getCodeFromRocketReg = async (phone:string, request, authResult) => {
+    const response = await request.get(
+        'https://chat.artsofte.ru/api/v1/chat.search',
+        {
+            params: {
+                roomId: 'hGTeSq6nEW9c22trw',
+                searchText: `7${phone}`,
+                count: 1
+            },
+            headers: {
+                'X-Auth-Token': authResult.token,
+                'X-User-Id': authResult.id
+            }}
+    );
+    const json = await response.json();
+    const message = json.messages[0].msg;
+    console.log(message);
+    console.log(message.substring(94,98));
+    return message.substring(94,98);   // для стейджа ...... а для прода 93, 98
+    
+};
 
 
 

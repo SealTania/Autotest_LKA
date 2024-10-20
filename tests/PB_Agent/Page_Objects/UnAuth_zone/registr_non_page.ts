@@ -3,9 +3,10 @@ import RegistrationPage from './registr_page.ts';
 import * as utils from '../../../utils'
 
 
-class RegistrationNonPage extends RegistrationPage{
+class RegistrationNonPage {
 // свойства класса
-
+    public readonly page: Page;
+    public readonly pageUrl: string;
     public readonly nonButton: Locator;  
     public readonly phone:Locator;
     public readonly email:Locator;
@@ -14,24 +15,34 @@ class RegistrationNonPage extends RegistrationPage{
     public readonly lastname:Locator;
     public readonly codeCountryButton: Locator;  
     public readonly countryCode: Locator;
+    public readonly commentButton: Locator;
+    public readonly instructionsButton: Locator;
+    public readonly instructionsAgreement: Locator;
+    public readonly personalAgreement: Locator;
 
 
     constructor(page: Page) {
-        super(page);
-        this.nonButton = page.locator('');
-        this.phone = page.locator('');
-        this.email = page.locator('');
-        this.surname = page.locator('');
-        this.name = page.locator('');
-        this.lastname = page.locator('');
+        this.page = page;
+        this.pageUrl = process.env.BaseURL as string;
+        this.nonButton = page.locator('button[class="select-button is-last ng-star-inserted"]');
+        this.phone = page.locator('input[type="tel"]');
+        this.email = page.locator('input[data-placeholder="common.action.enter"]');
+        this.surname = page.locator('input[data-placeholder="common.control.placeholder.surname"]');
+        this.name = page.locator('input[data-placeholder="common.control.placeholder.name"]');
+        this.lastname = page.locator('input[data-placeholder="common.control.placeholder.patronymic"]');
         this.codeCountryButton = page.locator('');
         this.countryCode = page.locator('');
+        this.commentButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]');
+        this.instructionsButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]');
+        this.instructionsAgreement = page.locator('div.instructions div:nth-child(4) span.checkbox__text'); 
+        this.personalAgreement = page.locator('div.instructions div:nth-child(5) span.checkbox__text');
+        
+
        
     }
 
     public async goto(): Promise<void> {
         console.log('Go to Non.reg.form');
-        await expect(this.registrForm).toBeVisible();
         await this.nonButton.click();
     }
     
@@ -55,14 +66,22 @@ class RegistrationNonPage extends RegistrationPage{
         
     }
 
+    public async commentPage(): Promise<void> {
+        console.log('Comment page');
+        await this.commentButton.click();
+        
+    }
 
-
-
-
-
-
-
-
+    public async instructionPage(page): Promise<void> {
+        console.log('instruction page');
+        await this.instructionsAgreement.click();
+        await this.personalAgreement.click();
+        await this.instructionsButton.click();
+        await page.waitForTimeout(2000);   
+        await expect(page).toHaveURL(`${this.pageUrl}/cabinet/agents`);
+        console.log('Successful');
+        
+    }
 
 
 

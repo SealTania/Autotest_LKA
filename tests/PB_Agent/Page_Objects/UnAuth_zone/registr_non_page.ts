@@ -19,6 +19,8 @@ class RegistrationNonPage {
     public readonly instructionsButton: Locator;
     public readonly instructionsAgreement: Locator;
     public readonly personalAgreement: Locator;
+    public readonly offerButton: Locator;
+    public readonly offerAgreement: Locator;
 
 
     constructor(page: Page) {
@@ -36,8 +38,8 @@ class RegistrationNonPage {
         this.instructionsButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]');
         this.instructionsAgreement = page.locator('div.instructions div:nth-child(4) span.checkbox__text'); 
         this.personalAgreement = page.locator('div.instructions div:nth-child(5) span.checkbox__text');
-        
-
+        this.offerButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]'); 
+        this.offerAgreement = page.locator('span[class="checkbox__box"]');
        
     }
 
@@ -71,6 +73,13 @@ class RegistrationNonPage {
         await this.commentButton.click();
         
     }
+
+    public async agreementPage(): Promise<void> {
+        console.log('Agreement page');
+        await this.offerAgreement.click();
+        await this.offerButton.click();
+    }
+    
 
     public async instructionPage(page): Promise<void> {
         console.log('instruction page');

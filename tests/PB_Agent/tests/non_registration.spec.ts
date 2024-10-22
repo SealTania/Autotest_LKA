@@ -4,7 +4,7 @@ import LoginPage from '../Page_Objects/UnAuth_zone/login_page.ts';
 import RegistrationPage from '../Page_Objects/UnAuth_zone/registr_page.ts';
 import RegistrationNonPage from '../Page_Objects/UnAuth_zone/registr_non_page.ts';
 
-test('Nonresident registration', async ({page, request}) => {
+test('Nonresident registration with comment-instr', async ({page, request}) => {
     const loginPage = new LoginPage(page);
     const registrPage = new RegistrationPage(page);
     const nonRegPage = new RegistrationNonPage(page);

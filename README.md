@@ -8,6 +8,8 @@ import * as utils from './utils.ts'
 3. Команда для запуска тестов с визуальным представлением
 npx playwright test Auth.spec.ts --ui
 3.1 Команда для запуска конкретных тестов из файла!!!!!!
+3.2 Команда запуска теста без визуализации
+3.3 PFgecr d rjyrhtnyjv ,hfeptht npx playwright Auth.spec.ts --project webkit
 4. Команда в Терминале для запуска декодера для записи теста с фронта
 npx playwright codegen "тут урл страницы для теста без скобок"
 

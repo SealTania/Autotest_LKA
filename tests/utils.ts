@@ -15,7 +15,7 @@ export const rocketAuth = async (request) => {
     const response = await request.post('https://chat.artsofte.ru/api/v1/method.callAnon/login', 
         {
             data:{
-                "message": "{\"msg\":\"method\",\"id\":\"5\",\"method\":\"login\",\"params\":[{\"ldap\":true,\"username\":\"treznikova\",\"ldapPass\":\"5Qmo32Uk\",\"ldapOptions\":{}}]}"
+                "message": "{\"msg\":\"method\",\"id\":\"5\",\"method\":\"login\",\"params\":[{\"ldap\":true,\"username\":\"treznikova\",\"ldapPass\":\"wsCNzES843}4\",\"ldapOptions\":{}}]}"
             }
         }
     );
@@ -69,7 +69,7 @@ export const getCodeFromRocketReg = async (phone:string, request, authResult) =>
     const message = json.messages[0].msg;
     console.log(message);
     console.log(message.substring(94,98));
-    return message.substring(94,98);   // для стейджа ...... а для прода 93, 98
+    return message.substring(94,98);   // для стейджа ...... а для прода 94, 98
     
 };
 

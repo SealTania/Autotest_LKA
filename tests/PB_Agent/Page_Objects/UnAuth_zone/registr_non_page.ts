@@ -7,7 +7,7 @@ class RegistrationNonPage {
 // свойства класса
     public readonly page: Page;
     public readonly pageUrl: string;
-    public readonly nonButton: Locator;  
+    public readonly nonButton: Locator; // какое-то непонятное название
     public readonly phone:Locator;
     public readonly email:Locator;
     public readonly surname:Locator;
@@ -32,11 +32,11 @@ class RegistrationNonPage {
         this.surname = page.locator('input[data-placeholder="common.control.placeholder.surname"]');
         this.name = page.locator('input[data-placeholder="common.control.placeholder.name"]');
         this.lastname = page.locator('input[data-placeholder="common.control.placeholder.patronymic"]');
-        this.codeCountryButton = page.locator('');
+        this.codeCountryButton = page.locator(''); // не стоит писать код на "будущее" - как только появится необходимость - напишешь
         this.countryCode = page.locator('');
         this.commentButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]');
         this.instructionsButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]');
-        this.instructionsAgreement = page.locator('div.instructions div:nth-child(4) span.checkbox__text'); 
+        this.instructionsAgreement = page.locator('div.instructions div:nth-child(4) span.checkbox__text'); // ето что за красота? Ты можешь чейнить локаторы если есть необходимость https://playwright.dev/docs/best-practices#use-chaining-and-filtering 
         this.personalAgreement = page.locator('div.instructions div:nth-child(5) span.checkbox__text');
         this.offerButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]'); 
         this.offerAgreement = page.locator('span[class="checkbox__box"]');
@@ -68,25 +68,25 @@ class RegistrationNonPage {
         
     }
 
-    public async commentPage(): Promise<void> {
+    public async commentPage(): Promise<void> { // глагол
         console.log('Comment page');
         await this.commentButton.click();
         
     }
 
-    public async agreementPage(): Promise<void> {
+    public async agreementPage(): Promise<void> { // глагол
         console.log('Agreement page');
         await this.offerAgreement.click();
         await this.offerButton.click();
     }
     
 
-    public async instructionPage(page): Promise<void> {
+    public async instructionPage(page): Promise<void> { // глагол
         console.log('instruction page');
         await this.instructionsAgreement.click();
         await this.personalAgreement.click();
         await this.instructionsButton.click();
-        await page.waitForTimeout(2000);   
+        await page.waitForTimeout(2000); // точно нужно?
         await expect(page).toHaveURL(`${this.pageUrl}/cabinet/agents`);
         console.log('Successful');
         

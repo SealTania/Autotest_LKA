@@ -33,7 +33,7 @@ constructor(page: Page) {
     this.lastname = page.locator('input[data-placeholder="common.control.placeholder.patronymic"]');
     this.comment = page.locator('textarea[type="text"]');
     this.objectList = page.locator('button[class*=select-simple-autocomplete-value-accessor__button]');
-    this.objectInt = page.locator('div[class="drop-down-list__info"]').nth(2);
+    this.objectInt = page.locator('div[class="drop-down-list__info"]').nth(2); // какой-то не понятный хардкод
     this.agreePersonal = page.locator('span[class="checkbox__box"]');
     this.sendButton = page.locator('button[class="ui-btn ui-btn_type_primary ui-btn_size_m"]');
     this.pageClient = page.locator('div.client');
@@ -45,7 +45,7 @@ constructor(page: Page) {
 
 // методы класса
 
-public async gotoNewFix(page): Promise<void> {
+public async gotoNewFix(page): Promise<void> { // зачем провайдить в эти методы page, она ведь и так появляется в полях класса при инициализации + название не нравится, я бы назвал openFixtationForm
     console.log('Form new fixation');
     await this.newFixButton.click();
     await expect(page).toHaveURL(`${this.pageUrl}/cabinet/clients/fixation`);
@@ -58,14 +58,14 @@ public async fillPhone(phoneNomber: string): Promise<void> {
     
 }
 
-public async fillAddPhone(phoneNomber: string): Promise<void> {
+public async fillAddPhone(phoneNomber: string): Promise<void> { // как писал в файле теста - можно объединить с fillPhone
     console.log('Filling add phone');
     await this.phoneAddButton.click();
     await this.phoneAdd.fill(phoneNomber);
     
 }
 
-public async fillEmail(email: string): Promise<void> {
+public async fillEmail(email: string): Promise<void> { // как по мне сильно декомпозируешь методы, кажется, что лучше оставить 1 метод для заполнения формы, а не дробить на множество
     console.log('Filling email');
     await this.email.fill(email);
     
